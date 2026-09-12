@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="TJM T-Agent AI 短视频作品播放页" />
+  <title>TJM · T-Agent Film Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-theme="gray" data-language="zh" data-portfolio-root>
+  <div class="room" aria-hidden="true"></div>
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <main class="app-shell">
+    <nav class="category-dock glass pis-reveal" aria-label="作品分类">
+      <button class="active" data-filter="all">全部作品</button>
+      <button data-filter="story">恋爱短剧</button>
+      <button data-filter="game">游戏影像</button>
+      <button data-filter="ad">品牌广告</button>
+    </nav>
+
+    <section class="workspace">
+      <aside class="tool-rail glass" aria-label="工具栏">
+        <a class="tool-link tool-logo" href="https://tianming332.github.io/JiangmingTian_Portfolio_Final/index.html?lang=zh-hans&amp;theme=white#all-works" aria-label="返回 TJM 作品集" title="TJM 作品集">TJM</a>
+        <a class="tool-link active" href="https://tianming332.github.io/Tian-AI-Video-Production-Agent-V1/" aria-label="前往 AI 视频制作 Agent" title="AI 视频制作 Agent">AI</a>
+      </aside>
+
+      <section class="player-card glass pis-reveal" data-spotlight data-tilt>
+        <div class="media-stage">
+          <img class="hero-poster" src="assets/posters/first-hand.jpg" alt="当前作品封面">
+          <video class="hero-video" playsinline></video>
+          <div class="media-shade"></div>
+          <button class="stage-play" aria-label="播放当前视频"><span>▶</span></button>
+        </div>
+
+        <div class="control-dock glass">
+          <button class="prev control-icon" aria-label="上一部"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14M18 6l-8 6 8 6V6Z"/></svg></button>
+          <button class="dock-play control-icon control-primary" aria-label="播放"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 9 6-9 6V6Z"/></svg></button>
+          <button class="next control-icon" aria-label="下一部"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14M6 6l8 6-8 6V6Z"/></svg></button>
+          <div class="track-info"><img src="assets/posters/first-hand.jpg" alt=""><span><b>初めて手をつなぐ</b><small>T-Agent 全流程生成</small></span></div>
+          <div class="progress"><i></i></div>
+          <time>00:00 / 01:22</time>
+          <div class="dock-actions">
+            <button class="sound-btn control-icon" aria-label="静音" title="静音"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h3l4 3V7l-4 3H5Z"/><path d="M15 9c1 .8 1.5 1.8 1.5 3S16 14.2 15 15"/></svg></button>
+            <label class="volume-control" title="音量">
+              <span class="visually-hidden">音量</span>
+              <input class="volume-range" type="range" min="0" max="1" step="0.01" value="1" aria-label="音量" />
+            </label>
+            <button class="expand-btn control-icon" aria-label="全屏" title="全屏"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5H5v4M15 5h4v4M9 19H5v-4M15 19h4v-4"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="playlist glass pis-reveal" data-spotlight>
+        <div class="playlist-title"><span>播放列表</span><b>PLAYLIST</b></div>
+        <div class="playlist-head"><span>2026 COLLECTION</span><b>05 部作品</b></div>
+        <div class="items"></div>
+        <div class="agent-note"><i>AI</i><p><b>全流程短视频 Agent</b><span>脚本 · 分镜 · 视觉 · 剪辑</span></p><button>↗</button></div>
+      </aside>
+    </section>
+
+    <aside class="preference-dock glass" aria-label="显示偏好">
+      <button class="pref-toggle" aria-expanded="true" aria-label="收起显示偏好" title="显示设置">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M7 14v6"/><circle cx="14" cy="7" r="2"/><circle cx="7" cy="17" r="2"/></svg>
+      </button>
+      <div class="pref-panel">
+        <div class="pref-group theme-control" aria-label="背景主题">
+          <button class="theme-choice white" data-theme-choice="white" aria-label="白色主题" title="白色主题"></button>
+          <button class="theme-choice gray" data-theme-choice="gray" aria-label="灰色主题" title="灰色主题"></button>
+          <button class="theme-choice black" data-theme-choice="black" aria-label="黑色主题" title="黑色主题"></button>
+        </div>
+        <span></span>
+        <div class="pref-group accent-control" aria-label="按钮颜色">
+          <button class="accent-choice blue" data-accent-choice="blue" aria-label="蓝色按钮" title="蓝色按钮"></button>
+          <button class="accent-choice lime" data-accent-choice="lime" aria-label="荧光绿按钮" title="荧光绿按钮"></button>
+          <button class="accent-choice white" data-accent-choice="white" aria-label="白色按钮" title="白色按钮"></button>
+        </div>
+        <span></span>
+        <div class="pref-group language-group language-control" aria-label="语言">
+          <button data-language-choice="zh">简</button><button data-language-choice="en">EN</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <section class="mobile-details">
+    <span>TJM / T-AGENT RESEARCH</span>
+    <h2>由一个想法，推进到完整成片。</h2>
+    <p>四部作品均由自研 T-Agent 系列中的全流程短视频 Agent 生成，涵盖叙事、游戏与商业影像。</p>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>
