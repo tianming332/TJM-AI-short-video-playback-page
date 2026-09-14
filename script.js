@@ -1,9 +1,9 @@
+const VIDEO_BASE = 'https://tianming332.github.io/Tian-VideoAgent-Assetes/videos/';
 const works = [
-  {id:0,cat:'story',title:'初めて手をつなぐ',date:'2026.06.18',duration:'01:22',ratio:'1080 / 1904',poster:'assets/posters/first-hand.jpg',video:'自研-短视频agent-作品/初めて手をつなぐ.mp4',meta:'AI 视频 · 恋爱短剧'},
-  {id:1,cat:'game',title:'战锤 40K：钢铁与信仰',date:'2026.07.09',duration:'00:30',ratio:'9 / 16',poster:'assets/posters/warhammer.jpg',video:'自研-短视频agent-作品/战锤40k混剪1.mp4',meta:'AI 视频 · 游戏混剪'},
-  {id:2,cat:'game',title:'战锤 40K：钢铁远征',date:'2026.07.27',duration:'00:30',ratio:'16 / 9',poster:'assets/posters/warhammer-v2.jpg',video:'自研-短视频agent-作品/战锤40k混剪-v2.mp4',meta:'AI 视频 · 游戏混剪 · 横屏'},
-  {id:3,cat:'ad',title:'汗水说，该补水了',date:'2026.08.16',duration:'00:33',ratio:'9 / 16',poster:'assets/posters/pocari.jpg',video:'自研-短视频agent-作品/宝矿力水特-汗水说该补水了-33s-竖屏-P02-标带字标.mp4',meta:'AI 视频 · 品牌广告'},
-  {id:4,cat:'ad',title:'沿风而行',date:'2026.09.03',duration:'00:43',ratio:'9 / 16',poster:'assets/posters/yanshi.jpg',video:'自研-短视频agent-作品/演示品牌广告短视频.mp4',meta:'AI 视频 · 生活方式'}
+  {id:0,cat:'story',title:'初めて手をつなぐ',date:'2026.06.18',duration:'01:22',ratio:'1080 / 1904',poster:'assets/posters/first-hand.jpg',video:`${VIDEO_BASE}tjm-ai-film-01-first-hand-20260618.mp4`,meta:'AI 视频 · 恋爱短剧'},
+  {id:1,cat:'game',title:'战锤 40K：钢铁远征',date:'2026.07.27',duration:'00:30',ratio:'16 / 9',poster:'assets/posters/warhammer-v2.jpg',video:`${VIDEO_BASE}tjm-ai-film-03-warhammer-expedition-20260727.mp4`,meta:'AI 视频 · 游戏混剪 · 横屏'},
+  {id:2,cat:'ad',title:'汗水说，该补水了',date:'2026.08.16',duration:'00:33',ratio:'9 / 16',poster:'assets/posters/pocari.jpg',video:`${VIDEO_BASE}tjm-ai-film-04-pocari-hydration-20260816.mp4`,meta:'AI 视频 · 品牌广告'},
+  {id:3,cat:'ad',title:'沿风而行',date:'2026.09.03',duration:'00:43',ratio:'9 / 16',poster:'assets/posters/yanshi.jpg',video:`${VIDEO_BASE}tjm-ai-film-05-yanshi-ride-with-wind-20260903.mp4`,meta:'AI 视频 · 生活方式'}
 ];
 
 const $ = selector => document.querySelector(selector);
@@ -107,7 +107,7 @@ $('.sound-btn').addEventListener('click', event => {
   event.currentTarget.setAttribute('aria-label', video.muted ? '取消静音' : '静音');
 });
 const volumeRange = $('.volume-range');
-let lastVolume = 1;
+let lastVolume = 0.5;
 function syncVolume() {
   const value = Number(volumeRange.value);
   video.volume = value;
@@ -116,7 +116,7 @@ function syncVolume() {
   volumeRange.style.setProperty('--volume-fill', `${value * 100}%`);
 }
 volumeRange.addEventListener('input', syncVolume);
-$('.sound-btn').addEventListener('dblclick', () => { volumeRange.value = lastVolume || 1; syncVolume(); });
+$('.sound-btn').addEventListener('dblclick', () => { volumeRange.value = lastVolume || 0.5; syncVolume(); });
 syncVolume();
 
 stage.addEventListener('pointermove', revealChrome);
