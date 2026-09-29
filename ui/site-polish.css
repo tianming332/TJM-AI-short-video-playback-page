@@ -1,0 +1,21 @@
+/* Film room: cinema controls, visible selection, stable media aspect ratio. */
+html[data-tjm-ui="film"] body { --tjm-ui-accent:var(--control-accent,#3157ff); }
+html[data-tjm-ui="film"] .category-dock { border-color:rgba(255,255,255,.26);box-shadow:0 8px 28px rgba(0,0,0,.1),inset 0 1px 0 rgba(255,255,255,.18); }
+html[data-tjm-ui="film"] .category-dock button { min-height:36px;padding-inline:17px;border-radius:999px; }
+html[data-tjm-ui="film"] .player-card { box-shadow:0 26px 70px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.16); }
+html[data-tjm-ui="film"] .playlist { border-color:rgba(255,255,255,.25); }
+html[data-tjm-ui="film"] .playlist-title { padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.13);margin-bottom:10px; }
+html[data-tjm-ui="film"] .item { border:1px solid transparent;border-radius:12px;transition:background .22s,border-color .22s,translate .35s var(--tjm-ui-ease); }
+html[data-tjm-ui="film"] .item.active { border-color:color-mix(in srgb,var(--control-accent) 35%,transparent);background:rgba(8,12,20,.16); }
+html[data-tjm-ui="film"] .item:is(:hover,:focus-visible) { background:rgba(255,255,255,.09);translate:2px 0; }
+html[data-tjm-ui="film"] .item-thumb { border-radius:8px;overflow:hidden; }
+html[data-tjm-ui="film"] .item-copy h3 { font-size:12px;line-height:1.55; }
+html[data-tjm-ui="film"] .item-copy p { line-height:1.6; }
+html[data-tjm-ui="film"] .control-dock { box-shadow:0 12px 34px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.16); }
+html[data-tjm-ui="film"] .control-icon { width:36px;height:36px;min-width:36px;border-radius:50%; }
+html[data-tjm-ui="film"] .progress { min-height:18px;display:flex;align-items:center;touch-action:manipulation; }
+html[data-tjm-ui="film"] .progress i { height:3px;top:auto; }
+html[data-tjm-ui="film"] .progress::before { top:50%;transform:translateY(-50%); }
+html[data-tjm-ui="film"] .track-info b { letter-spacing:.01em; }
+html[data-tjm-ui="film"] .mobile-details p { line-height:1.9; }
+@media(max-width:700px){html[data-tjm-ui="film"] .category-dock{gap:2px}html[data-tjm-ui="film"] .category-dock button{padding-inline:10px;font-size:10px}html[data-tjm-ui="film"] .item{padding:10px}html[data-tjm-ui="film"] .control-icon{width:34px;height:34px;min-width:34px}}

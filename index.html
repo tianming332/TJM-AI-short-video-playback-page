@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-tjm-ui="film">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260914-media-fix" />
+  <link rel="stylesheet" href="styles.css?v=20260929-six-films2" />
+
+  <!-- TJM UI POLISH START -->
+  <link rel="stylesheet" href="ui/polish-core.css?v=20260929-independent-2">
+  <link rel="stylesheet" href="ui/site-polish.css?v=20260929-independent-2">
+  <script defer src="ui/polish-core.js?v=20260929-independent-2"></script>
+  <!-- TJM UI POLISH END -->
 </head>
 <body data-theme="gray" data-language="zh" data-portfolio-root>
   <div class="room" aria-hidden="true"></div>
@@ -33,6 +39,7 @@
           <img class="hero-poster" src="assets/posters/first-hand.jpg" alt="当前作品封面">
           <video class="hero-video" playsinline></video>
           <div class="media-shade"></div>
+          <p class="playback-status" role="status" aria-live="polite" hidden></p>
           <button class="stage-play" aria-label="播放当前视频"><span>▶</span></button>
         </div>
 
@@ -56,7 +63,7 @@
 
       <aside class="playlist glass pis-reveal" data-spotlight>
         <div class="playlist-title"><span>播放列表</span><b>PLAYLIST</b></div>
-        <div class="playlist-head"><span>2026 COLLECTION</span><b>04 部作品</b></div>
+        <div class="playlist-head"><span>2026 COLLECTION</span><b>06 部作品</b></div>
         <div class="items"></div>
         <div class="agent-note"><i>AI</i><p><b>全流程短视频 Agent</b><span>脚本 · 分镜 · 视觉 · 剪辑</span></p><button>↗</button></div>
       </aside>
@@ -89,8 +96,9 @@
   <section class="mobile-details">
     <span>TJM / T-AGENT RESEARCH</span>
     <h2>由一个想法，推进到完整成片。</h2>
-    <p>四部作品均由自研 T-Agent 系列中的全流程短视频 Agent 生成，涵盖叙事、游戏与商业影像。</p>
+    <p>六部作品由自研 T-Agent 系列创作，涵盖叙事、游戏与商业影像。</p>
   </section>
-  <script src="script.js?v=20260914-media-fix"></script>
+  <script src="data/films.js?v=20260929-six-films2"></script>
+  <script src="script.js?v=20260929-six-films2"></script>
 </body>
 </html>

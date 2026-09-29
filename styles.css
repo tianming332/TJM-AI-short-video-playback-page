@@ -362,3 +362,7 @@ body[data-accent="white"]{--control-accent:#f5f5f1;--control-accent-rgb:245,245,
 .accent-choice[aria-pressed="true"]{box-shadow:0 0 0 2px var(--control-accent);transform:scale(.9)}
 @media(max-width:700px){.volume-control{width:46px}}
 @media(max-width:520px){.volume-control{display:none}.prev,.next{display:grid}.track-info{display:none}.control-dock time{display:none}.progress{flex:1}}
+
+/* Media availability feedback never covers the player controls. */
+.playback-status[hidden] { display:none; }
+.playback-status { position:absolute;z-index:20;left:16px;right:16px;top:16px;margin:0;padding:12px 14px;border:1px solid rgba(255,255,255,.24);border-radius:12px;background:rgba(12,16,25,.88);color:#fff;font-size:12px;line-height:1.7;pointer-events:none; }

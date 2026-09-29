@@ -1,10 +1,4 @@
-const VIDEO_BASE = 'https://tianming332.github.io/Tian-VideoAgent-Assetes/videos/';
-const works = [
-  {id:0,cat:'story',title:'初めて手をつなぐ',date:'2026.06.18',duration:'01:22',ratio:'1080 / 1904',poster:'assets/posters/first-hand.jpg',video:`${VIDEO_BASE}tjm-ai-film-01-first-hand-20260618.mp4`,meta:'AI 视频 · 恋爱短剧'},
-  {id:1,cat:'game',title:'战锤 40K：钢铁远征',date:'2026.07.27',duration:'00:30',ratio:'16 / 9',poster:'assets/posters/warhammer-v2.jpg',video:`${VIDEO_BASE}tjm-ai-film-03-warhammer-expedition-20260727.mp4`,meta:'AI 视频 · 游戏混剪 · 横屏'},
-  {id:2,cat:'ad',title:'汗水说，该补水了',date:'2026.08.16',duration:'00:33',ratio:'9 / 16',poster:'assets/posters/pocari.jpg',video:`${VIDEO_BASE}tjm-ai-film-04-pocari-hydration-20260816.mp4`,meta:'AI 视频 · 品牌广告'},
-  {id:3,cat:'ad',title:'沿风而行',date:'2026.09.03',duration:'00:43',ratio:'9 / 16',poster:'assets/posters/yanshi.jpg',video:`${VIDEO_BASE}tjm-ai-film-05-yanshi-ride-with-wind-20260903.mp4`,meta:'AI 视频 · 生活方式'}
-];
+const works = window.TJM_FILMS;
 
 const $ = selector => document.querySelector(selector);
 const body = document.body;
@@ -18,8 +12,21 @@ const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let current = 0;
 let visible = [...works];
 let chromeTimer;
+let selectionTimer;
+let selectionVersion = 0;
+
+function syncCollectionCount() {
+  $('.playlist-head b').textContent = `${String(visible.length).padStart(2, '0')} ${lang === 'en' ? 'films' : '部作品'}`;
+}
+
+function setPlaybackMessage(message = '') {
+  const output = $('.playback-status');
+  output.textContent = message;
+  output.hidden = !message;
+}
 
 function renderItems() {
+  syncCollectionCount();
   items.innerHTML = visible.map(work => `
     <article class="item ${work.id === current ? 'active' : ''}" data-id="${work.id}" tabindex="0" role="button" aria-label="播放 ${work.title}">
       <div class="item-thumb"><img src="${work.poster}" alt=""><span>${work.duration}</span></div>
@@ -34,6 +41,8 @@ function renderItems() {
 
 function updateCurrent(work) {
   poster.src = work.poster;
+  poster.alt = work.title;
+  video.setAttribute('aria-label', work.title);
   document.documentElement.style.setProperty('--video-ratio', work.ratio || '9 / 16');
   $('.track-info img').src = work.poster;
   $('.track-info b').textContent = work.title;
@@ -43,10 +52,15 @@ function updateCurrent(work) {
 }
 
 function select(id, autoplay = false) {
-  const work = works[id];
+  const work = works.find(work => work.id === id);
   if (!work) return;
+  clearTimeout(selectionTimer);
+  const version = ++selectionVersion;
+  video.pause();
   stage.classList.add('is-switching');
   const change = () => {
+    if (version !== selectionVersion) return;
+    setPlaybackMessage();
     video.pause();
     video.removeAttribute('src');
     video.load();
@@ -57,22 +71,31 @@ function select(id, autoplay = false) {
     stage.classList.remove('is-playing', 'chrome-visible', 'is-switching');
     if (autoplay) play();
   };
-  window.setTimeout(change, motionOK ? 160 : 0);
+  selectionTimer = window.setTimeout(change, motionOK ? 160 : 0);
 }
 
 function play() {
+  if (stage.classList.contains('is-switching')) return;
   const work = works[current];
   if (!video.getAttribute('src')) {
-    video.src = encodeURI(work.video);
+    video.src = window.resolveFilmPlaybackURL(work);
     video.style.display = 'block';
     poster.style.display = 'none';
   }
-  if (video.paused) video.play().catch(() => {});
+  if (video.paused) {
+    setPlaybackMessage();
+    const version = selectionVersion;
+    video.play().catch(error => {
+      if (version !== selectionVersion || error.name === 'AbortError') return;
+      setPlaybackMessage(lang === 'en' ? 'Playback could not start. Try again or check the video URL.' : '视频暂时无法播放，请重试或检查视频地址。');
+    });
+  }
   else video.pause();
 }
 
 function navigate(step) {
   const ids = visible.map(work => work.id);
+  if (!ids.length) return;
   const position = Math.max(0, ids.indexOf(current));
   select(ids[(position + step + ids.length) % ids.length]);
 }
@@ -123,6 +146,7 @@ stage.addEventListener('pointermove', revealChrome);
 stage.addEventListener('pointerleave', () => { if (!video.paused) stage.classList.remove('chrome-visible'); });
 
 video.addEventListener('play', () => {
+  setPlaybackMessage();
   stage.classList.add('is-playing');
   stage.classList.remove('chrome-visible');
   setPlayIcon(true);
@@ -136,6 +160,17 @@ video.addEventListener('pause', () => {
   stagePlay.setAttribute('aria-label', '播放当前视频');
 });
 video.addEventListener('ended', () => stage.classList.remove('is-playing'));
+video.addEventListener('error', () => {
+  if (!video.getAttribute('src') || stage.classList.contains('is-switching')) return;
+  video.style.display = 'none';
+  poster.style.display = 'block';
+  stage.classList.remove('is-playing', 'chrome-visible');
+  video.removeAttribute('src');
+  video.load();
+  setPlaybackMessage(lang === 'en'
+    ? 'Video unavailable. New films require the matching files to be published to GitHub Pages.'
+    : '视频暂不可用。新增视频需将对应文件上传并发布到 GitHub Pages 后才能在线播放。');
+});
 video.addEventListener('timeupdate', () => {
   if (!video.duration) return;
   $('.progress i').style.width = `${video.currentTime / video.duration * 100}%`;
@@ -152,7 +187,7 @@ document.querySelectorAll('.category-dock button').forEach(button => button.addE
   document.querySelectorAll('.category-dock button').forEach(item => item.classList.remove('active'));
   button.classList.add('active');
   visible = button.dataset.filter === 'all' ? [...works] : works.filter(work => work.cat === button.dataset.filter);
-  if (!visible.some(work => work.id === current)) select(visible[0].id);
+  if (visible.length && !visible.some(work => work.id === current)) select(visible[0].id);
   else renderItems();
 }));
 
@@ -187,6 +222,7 @@ function applyPreferences() {
   const categories = document.querySelectorAll('.category-dock button');
   [text.all,text.story,text.game,text.ad].forEach((label,index) => categories[index].textContent = label);
   $('.playlist-title span').textContent = text.list;
+  syncCollectionCount();
   window.dispatchEvent(new CustomEvent('portfolio:themechange',{detail:{theme}}));
 }
 document.querySelectorAll('[data-theme-choice]').forEach(button => button.addEventListener('click', () => { theme = button.dataset.themeChoice; applyPreferences(); }));
