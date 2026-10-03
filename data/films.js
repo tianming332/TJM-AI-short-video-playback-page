@@ -8,7 +8,9 @@
     {id:2,cat:'ad',title:'汗水说，该补水了',date:'2026.08.16',duration:'00:33',ratio:'9 / 16',poster:'assets/posters/pocari.jpg',video:`${videoBase}tjm-ai-film-04-pocari-hydration-20260816.mp4`,meta:'AI 视频 · 品牌广告'},
     {id:3,cat:'ad',title:'沿风而行',date:'2026.09.03',duration:'00:43',ratio:'9 / 16',poster:'assets/posters/yanshi.jpg',video:`${videoBase}tjm-ai-film-05-yanshi-ride-with-wind-20260903.mp4`,meta:'AI 视频 · 生活方式'},
     {id:4,cat:'ad',title:'彩妆 · 苹果发布会风广告',date:'2026.09.29',duration:'00:30',ratio:'16 / 9',poster:'assets/posters/beauty-keynote.jpg',video:`${videoBase}tjm-ai-film-07-beauty-keynote-ad-20260929.mp4`,sourceVideo:repositoryBase+encodeURIComponent('彩妆-苹果发布会风广告.mp4'),meta:'AI 视频 · 彩妆广告 · 横屏'},
-    {id:5,cat:'ad',title:'自然旅聚 · 概念广告',date:'2026.09.29',duration:'00:30',ratio:'16 / 9',poster:'assets/posters/nature-journey.jpg',video:`${videoBase}tjm-ai-film-08-nature-journey-ad-20260929.mp4`,sourceVideo:repositoryBase+encodeURIComponent('自然旅聚概念广告视频.mp4'),meta:'AI 视频 · 自然概念 · 横屏'}
+    {id:5,cat:'ad',title:'自然旅聚 · 概念广告',date:'2026.09.29',duration:'00:30',ratio:'16 / 9',poster:'assets/posters/nature-journey.jpg',video:`${videoBase}tjm-ai-film-08-nature-journey-ad-20260929.mp4`,sourceVideo:repositoryBase+encodeURIComponent('自然旅聚概念广告视频.mp4'),meta:'AI 视频 · 自然概念 · 横屏'},
+    {id:6,cat:'story',title:'喜欢 · 恋爱向短视频',date:'2026.09.30',duration:'00:35',ratio:'9 / 16',poster:'assets/posters/like-love-story.jpg',video:`${videoBase}tjm-ai-film-09-like-love-story-20260930.mp4`,sourceVideo:repositoryBase+encodeURIComponent('喜欢-恋爱向短视频.mp4'),uploadStatus:'pending',meta:'AI 视频 · 恋爱短剧 · 竖屏'},
+    {id:7,cat:'story',title:'小王子 · 恋爱向短视频',date:'2026.10.03',duration:'00:18',ratio:'9 / 16',poster:'assets/posters/little-prince-love-story.jpg',video:`${videoBase}tjm-ai-film-10-little-prince-love-story-20261003.mp4`,sourceVideo:repositoryBase+encodeURIComponent('小王子-恋爱向短视频.mp4'),uploadStatus:'pending',meta:'AI 视频 · 恋爱短剧 · 竖屏'}
   ];
   window.TJM_FILMS = Object.freeze(films.map(film => Object.freeze(film)));
   window.resolveFilmPlaybackURL = function (film, href = location.href) {
