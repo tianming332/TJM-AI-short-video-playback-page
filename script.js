@@ -25,16 +25,8 @@ function setPlaybackMessage(message = '') {
   output.hidden = !message;
 }
 
-function syncUploadStatus(work) {
-  const subtitle = $('.track-info small');
-  if (work.uploadStatus !== 'pending') {
-    subtitle.textContent = lang === 'en' ? 'Created with T-Agent' : 'T-Agent 全流程生成';
-    return;
-  }
-  const isLocal = window.resolveFilmPlaybackURL(work) !== work.video;
-  subtitle.textContent = lang === 'en'
-    ? (isLocal ? 'Local preview · Pending upload' : 'Pending upload · URL reserved')
-    : (isLocal ? '本地预览 · 待上传' : '待上传 · 链接已预留');
+function syncSubtitle() {
+  $('.track-info small').textContent = lang === 'en' ? 'Created with T-Agent' : 'T-Agent 全流程生成';
 }
 
 function renderItems() {
@@ -42,7 +34,7 @@ function renderItems() {
   items.innerHTML = visible.map(work => `
     <article class="item ${work.id === current ? 'active' : ''}" data-id="${work.id}" tabindex="0" role="button" aria-label="播放 ${work.title}">
       <div class="item-thumb"><img src="${work.poster}" alt=""><span>${work.duration}</span></div>
-      <div class="item-copy"><small>${work.date}${work.uploadStatus === 'pending' ? `<span class="upload-badge">${lang === 'en' ? 'Pending upload' : '待上传'}</span>` : ''}</small><h3>${work.title}</h3><p>${work.meta}</p></div>
+      <div class="item-copy"><small>${work.date}</small><h3>${work.title}</h3><p>${work.meta}</p></div>
     </article>`).join('');
   items.querySelectorAll('.item').forEach(item => {
     const open = () => select(Number(item.dataset.id));
@@ -58,7 +50,7 @@ function updateCurrent(work) {
   document.documentElement.style.setProperty('--video-ratio', work.ratio || '9 / 16');
   $('.track-info img').src = work.poster;
   $('.track-info b').textContent = work.title;
-  syncUploadStatus(work);
+  syncSubtitle();
   $('.control-dock time').textContent = `00:00 / ${work.duration}`;
   $('.progress i').style.width = '0%';
   renderItems();
@@ -91,7 +83,7 @@ function play() {
   if (stage.classList.contains('is-switching')) return;
   const work = works[current];
   if (!video.getAttribute('src')) {
-    video.src = window.resolveFilmPlaybackURL(work);
+    video.src = work.video;
     video.style.display = 'block';
     poster.style.display = 'none';
   }
@@ -238,7 +230,7 @@ function applyPreferences() {
   [text.all,text.story,text.game,text.ad].forEach((label,index) => categories[index].textContent = label);
   $('.playlist-title span').textContent = text.list;
   renderItems();
-  syncUploadStatus(works.find(work => work.id === current));
+  syncSubtitle();
   window.dispatchEvent(new CustomEvent('portfolio:themechange',{detail:{theme}}));
 }
 document.querySelectorAll('[data-theme-choice]').forEach(button => button.addEventListener('click', () => { theme = button.dataset.themeChoice; applyPreferences(); }));
